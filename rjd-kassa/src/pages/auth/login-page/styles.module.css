@@ -1,0 +1,15 @@
+.page {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px
+}
+.title {
+    text-align: center;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
