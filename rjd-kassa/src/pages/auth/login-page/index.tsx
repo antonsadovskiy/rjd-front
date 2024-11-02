@@ -4,6 +4,9 @@ import { Auth } from '@/entities/api/auth';
 import { useNavigate } from 'react-router-dom';
 import { routes } from '@/constants/routes.ts';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { AxiosError } from 'axios';
+import { useAppStore } from '@/entities/store';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -11,8 +14,23 @@ export const LoginPage = () => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
+  const setIsLoggedIn = useAppStore((state) => state.setIsLoggedIn);
+
   const loginHandler = async () => {
-    await Auth.login({ login, password });
+    try {
+      const data = await Auth.login({ login, password });
+
+      if (data.meta) {
+        toast.success(data.meta);
+      }
+      setIsLoggedIn(true);
+
+      navigate(routes.main);
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        toast.error(e.response?.data.meta);
+      }
+    }
   };
 
   const redirectToRegister = () => {
@@ -22,19 +40,19 @@ export const LoginPage = () => {
   return (
     <div className={styles.page}>
       <Typography variant={'h5'} className={styles.title}>
-        Login
+        Авторизация
       </Typography>
       <div className={styles.inputs}>
         <TextField
           size={'medium'}
           value={login}
-          label={'Login'}
+          label={'Логин'}
           onChange={(e) => setLogin(e.currentTarget.value)}
         />
         <TextField
           size={'medium'}
           value={password}
-          label={'Password'}
+          label={'Пароль'}
           type={'password'}
           onChange={(e) => setPassword(e.currentTarget.value)}
         />
@@ -44,10 +62,10 @@ export const LoginPage = () => {
         onClick={loginHandler}
         variant={'contained'}
       >
-        Login
+        Войти
       </Button>
       <Link component="button" variant="body2" onClick={redirectToRegister}>
-        Dont have account?
+        Нет аккаунта?
       </Link>
     </div>
   );

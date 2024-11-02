@@ -4,13 +4,28 @@ import { routes } from '@/constants/routes.ts';
 import styles from '@/pages/auth/login-page/styles.module.css';
 import { Button, Link, TextField, Typography } from '@mui/material';
 
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { AxiosError } from 'axios';
+
 export const RegisterPage = () => {
   const navigate = useNavigate();
 
-  const register = async () => {
-    const data = await Auth.register({ login: 'antonnnnn', password: '123456' });
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
 
-    console.log(data);
+  const register = async () => {
+    try {
+      const data = await Auth.register({ login, password });
+      if (data.meta) {
+        toast.success(data.meta);
+      }
+      navigate(routes.login);
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        toast.error(e.response?.data.meta);
+      }
+    }
   };
 
   const redirectToLogin = () => {
@@ -20,17 +35,30 @@ export const RegisterPage = () => {
   return (
     <div className={styles.page}>
       <Typography variant={'h5'} className={styles.title}>
-        Register
+        Регистрация
       </Typography>
       <div className={styles.inputs}>
-        <TextField size={'medium'} label={'Login'} />
-        <TextField size={'medium'} label={'Password'} />
+        <TextField
+          size={'medium'}
+          label={'Логин'}
+          onChange={(e) => setLogin(e.currentTarget.value)}
+        />
+        <TextField
+          size={'medium'}
+          type={'password'}
+          label={'Пароль'}
+          onChange={(e) => setPassword(e.currentTarget.value)}
+        />
       </div>
-      <Button onClick={register} variant={'contained'}>
-        Register
+      <Button
+        disabled={!login || !password}
+        onClick={register}
+        variant={'contained'}
+      >
+        Зарегистрироваться
       </Button>
       <Link component="button" variant="body2" onClick={redirectToLogin}>
-        Already have account?
+        Уже есть аккаунт?
       </Link>
     </div>
   );
