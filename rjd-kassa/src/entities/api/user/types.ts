@@ -8,6 +8,7 @@ export type GetUserResponseType = {
 export type GetUserTicketsResponseType = {
   data: {
     content: {
+      id: number;
       start_date: string;
       train_number: string;
       from: string;

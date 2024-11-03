@@ -19,22 +19,24 @@ export type GetAllVoyagesRequestType = {
   date?: string;
 };
 
+export type VoyageType = {
+  id: number;
+  start_date: string;
+  train: {
+    id: number;
+    number: string;
+    model: string;
+    train_type: string;
+  };
+  from: string;
+  to: string;
+  tickets_left: number;
+  ticket_cost: number;
+};
+
 export type GetAllVoyagesResponseType = {
   data: {
-    content: {
-      id: number;
-      start_date: string;
-      train: {
-        id: number;
-        number: string;
-        model: string;
-        train_type: string;
-      };
-      from: string;
-      to: string;
-      tickets_left: number;
-      tickets_cost: number;
-    }[];
+    content: VoyageType[];
     page: number;
     totalPages: number;
     perPage: number;

@@ -9,7 +9,9 @@ export class Ticket {
 
   // print ticket
   public static async printTicket(id: number) {
-    const response = await Api.axios.get(`ticket/print/${id}`);
+    const response = await Api.axios.get(`ticket/print/${id}`, {
+      responseType: 'blob',
+    });
     return response.data;
   }
 }

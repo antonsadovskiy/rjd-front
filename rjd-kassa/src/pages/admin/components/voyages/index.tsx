@@ -3,28 +3,27 @@ import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { routes } from '@/constants/routes.ts';
 import { Button, Typography } from '@mui/material';
-import { Route } from '@/entities/api/route';
-import s from '@/pages/admin/styles.module.css';
 import { Table } from '@/shared/table';
-import { useRoutesTable } from '@/hooks/useRoutesTable.ts';
+import s from '@/pages/admin/styles.module.css';
+import { Voyage } from '@/entities/api/voyage';
+import { useVoyagesTable } from '@/hooks/useVoyagesTable.ts';
 import { useState } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-export const Routes = () => {
+export const Voyages = () => {
   const navigate = useNavigate();
+
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const { selectedRow, setSelectedRow, rows, fetchData, columns } =
-    useRoutesTable();
+  const { rows, setSelectedRow, selectedRow, columns, fetchData } =
+    useVoyagesTable();
 
-  const addNewRouteNavigate = () => navigate(routes.adminAddRoute);
-
-  const deleteRoute = async () => {
+  const addNewVoyageNavigate = () => navigate(routes.adminAddVoyage);
+  const deleteVoyage = async () => {
     try {
       setIsDeleting(true);
-
       if (selectedRow) {
-        const data = await Route.adminDeleteRoute(selectedRow);
+        const data = await Voyage.adminDeleteVoyage(selectedRow);
         toast.success(data.meta);
 
         await fetchData();
@@ -38,41 +37,42 @@ export const Routes = () => {
     }
   };
 
-  const editRoute = () => {
+  const editVoyage = () => {
     const selectedRoute = rows.find((item) => item.id === selectedRow);
+    console.log(selectedRoute);
     if (selectedRoute) {
-      navigate(routes.adminEditRoute, { state: selectedRoute });
+      navigate(routes.adminEditVoyage, { state: { ...selectedRoute } });
     }
   };
 
   return (
     <div>
-      <Typography variant={'h6'}>Действия с маршрутами</Typography>
+      <Typography variant={'h6'}>Действия с путешествиями</Typography>
       <Table columns={columns} rows={rows} setSelectedRow={setSelectedRow} />
       <div className={s.buttons}>
         <Button
-          onClick={addNewRouteNavigate}
+          onClick={addNewVoyageNavigate}
           color={'primary'}
           variant={'contained'}
         >
-          Добавить маршрут
+          Добавить путешествие
         </Button>
         <LoadingButton
           loading={isDeleting}
           disabled={!selectedRow}
-          onClick={deleteRoute}
+          onClick={deleteVoyage}
           color={'error'}
           variant={'contained'}
         >
-          Удалить маршрут
+          Удалить путешествие
         </LoadingButton>
         <Button
           disabled={!selectedRow}
-          onClick={editRoute}
+          onClick={editVoyage}
           color={'warning'}
           variant={'contained'}
         >
-          Редактировать маршрут
+          Редактировать путешествие
         </Button>
       </div>
     </div>

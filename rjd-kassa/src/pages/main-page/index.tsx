@@ -1,41 +1,43 @@
-import { useEffect } from 'react';
 import { AxiosError } from 'axios';
-import { Train } from '@/entities/api/train';
+import { Table } from '@/shared/table';
+import { useVoyagesTable } from '@/hooks/useVoyagesTable.ts';
+import { Button } from '@mui/material';
+import s from './styles.module.css';
+import toast from 'react-hot-toast';
+import { Ticket } from '@/entities/api/ticket';
+import { routes } from '@/constants/routes.ts';
+import { useNavigate } from 'react-router-dom';
 
 export const MainPage = () => {
-  useEffect(() => {
-    const fetchMe = async () => {
-      try {
-        const data = await Train.getTrainTypes();
-        console.log(data);
-      } catch (e) {
-        if (e instanceof AxiosError) {
-          console.log(e.response?.data.meta);
-        }
+  const navigate = useNavigate();
+
+  const { rows, setSelectedRow, selectedRow, columns } = useVoyagesTable();
+
+  const buyTicket = async () => {
+    try {
+      if (selectedRow) {
+        const data = await Ticket.buyTicket({ voyage_id: selectedRow });
+
+        toast.success(data.meta);
       }
-    };
-
-    fetchMe();
-  }, []);
-
-  const addTrain = async () => {
-    await Train.adminAddTrain({
-      train_type_id: 1,
-      model: 'assaas',
-      number: '233232',
-      passengers: 2,
-    });
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        toast.error(e.response?.data.meta);
+      }
+    }
   };
 
-  const getAll = async () => {
-    const data = await Train.getAllTrains({});
-    console.log(data);
-  };
+  const myTicketsNavigate = () => navigate(routes.myTickets);
 
   return (
-    <div>
-      <button onClick={addTrain}>add</button>
-      <button onClick={getAll}>get all</button>
+    <div className={s.page}>
+      <Table rows={rows} columns={columns} setSelectedRow={setSelectedRow} />
+      <Button disabled={!selectedRow} onClick={buyTicket} variant={'contained'}>
+        Купить билет
+      </Button>
+      <Button onClick={myTicketsNavigate} variant={'contained'}>
+        Мои билеты
+      </Button>
     </div>
   );
 };

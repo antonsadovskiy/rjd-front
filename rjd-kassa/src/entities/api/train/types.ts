@@ -5,10 +5,17 @@ export type GetTrainTypesResponseType = {
   meta: string | null;
 };
 
+export type TrainsSortModel =
+  | 'name'
+  | 'model'
+  | 'passengers'
+  | 'train_type'
+  | 'id';
+
 export type GetAllTrainsRequestType = {
   page?: number;
   perPage?: number;
-  sortBy?: 'name' | 'model' | 'passengers' | 'train_type' | 'id';
+  sortBy?: TrainsSortModel;
   sortDirection?: 'ASC' | 'DESC';
   type_id?: number;
   passengers_from?: number;

@@ -27,9 +27,12 @@ export class Voyage {
 
   // get all voyages
   public static async getAllVoyages(data: GetAllVoyagesRequestType) {
-    const response = await Api.axios.get<GetAllVoyagesResponseType>('voyage', {
-      params: { ...data },
-    });
+    const response = await Api.axios.get<GetAllVoyagesResponseType>(
+      'voyage/all',
+      {
+        params: { ...data },
+      },
+    );
     return response.data;
   }
 }
