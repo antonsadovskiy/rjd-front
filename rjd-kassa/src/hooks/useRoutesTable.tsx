@@ -5,13 +5,26 @@ import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 
 const columns: GridColDef[] = [
-  { field: 'start', flex: 1, headerName: 'Начало', width: 150 },
-  { field: 'finish', flex: 1, headerName: 'Конец', width: 150 },
+  {
+    field: 'start',
+    flex: 1,
+    headerName: 'Начало',
+    width: 150,
+    renderHeader: (params) => <strong>{params.colDef.headerName}</strong>,
+  },
+  {
+    field: 'finish',
+    flex: 1,
+    headerName: 'Конец',
+    width: 150,
+    renderHeader: (params) => <strong>{params.colDef.headerName}</strong>,
+  },
   {
     field: 'travelTimeToShow',
     flex: 1,
     headerName: 'Время в пути',
     width: 150,
+    renderHeader: (params) => <strong>{params.colDef.headerName}</strong>,
   },
 ];
 

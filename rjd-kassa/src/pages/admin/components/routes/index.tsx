@@ -6,7 +6,7 @@ import { Button, Typography } from '@mui/material';
 import { Route } from '@/entities/api/route';
 import s from '@/pages/admin/styles.module.css';
 import { Table } from '@/shared/table';
-import { useRoutesTable } from '@/hooks/useRoutesTable.ts';
+import { useRoutesTable } from '@/hooks/useRoutesTable.tsx';
 import { useState } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 

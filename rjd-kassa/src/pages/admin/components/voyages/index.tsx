@@ -6,7 +6,7 @@ import { Button, Typography } from '@mui/material';
 import { Table } from '@/shared/table';
 import s from '@/pages/admin/styles.module.css';
 import { Voyage } from '@/entities/api/voyage';
-import { useVoyagesTable } from '@/hooks/useVoyagesTable.ts';
+import { useVoyagesTable } from '@/hooks/useVoyagesTable.tsx';
 import { useState } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 

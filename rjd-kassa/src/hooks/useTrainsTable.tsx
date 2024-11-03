@@ -10,24 +10,28 @@ const columns: GridColDef[] = [
     flex: 1,
     headerName: 'Номер',
     disableColumnMenu: true,
+    renderHeader: (params) => <strong>{params.colDef.headerName}</strong>,
   },
   {
     field: 'model',
     flex: 1,
     headerName: 'Модель',
     disableColumnMenu: true,
+    renderHeader: (params) => <strong>{params.colDef.headerName}</strong>,
   },
   {
     field: 'passengers',
     flex: 1,
     headerName: 'Кол-во мест',
     disableColumnMenu: true,
+    renderHeader: (params) => <strong>{params.colDef.headerName}</strong>,
   },
   {
     field: 'trainType',
     flex: 1,
     headerName: 'Тип поезда',
     disableColumnMenu: true,
+    renderHeader: (params) => <strong>{params.colDef.headerName}</strong>,
   },
 ];
 

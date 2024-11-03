@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { Table } from '@/shared/table';
-import { useVoyagesTable } from '@/hooks/useVoyagesTable.ts';
+import { useVoyagesTable } from '@/hooks/useVoyagesTable.tsx';
 import { Button } from '@mui/material';
 import s from './styles.module.css';
 import toast from 'react-hot-toast';

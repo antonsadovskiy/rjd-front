@@ -6,7 +6,7 @@ import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { routes } from '@/constants/routes.ts';
 import { Table } from '@/shared/table';
-import { useTrainsTable } from '@/hooks/useTrainsTable.ts';
+import { useTrainsTable } from '@/hooks/useTrainsTable.tsx';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useState } from 'react';
 
