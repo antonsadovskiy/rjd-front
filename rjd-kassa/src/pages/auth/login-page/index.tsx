@@ -7,6 +7,7 @@ import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { AxiosError } from 'axios';
 import { useAppStore } from '@/entities/store';
+import { defineIsAdmin } from '@/utils/token.service.ts';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -15,10 +16,16 @@ export const LoginPage = () => {
   const [password, setPassword] = useState('');
 
   const setIsLoggedIn = useAppStore((state) => state.setIsLoggedIn);
+  const setIsAdmin = useAppStore((state) => state.setIsAdmin);
 
   const loginHandler = async () => {
     try {
       const data = await Auth.login({ login, password });
+
+      const isAdmin = defineIsAdmin(data.data.token);
+      if (isAdmin) {
+        setIsAdmin(true);
+      }
 
       if (data.meta) {
         toast.success(data.meta);

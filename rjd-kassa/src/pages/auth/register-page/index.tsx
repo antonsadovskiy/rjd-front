@@ -7,6 +7,8 @@ import { Button, Link, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { AxiosError } from 'axios';
+import { defineIsAdmin } from '@/utils/token.service.ts';
+import { useAppStore } from '@/entities/store';
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
@@ -14,13 +16,24 @@ export const RegisterPage = () => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
 
+  const setIsLoggedIn = useAppStore((state) => state.setIsLoggedIn);
+  const setIsAdmin = useAppStore((state) => state.setIsAdmin);
+
   const register = async () => {
     try {
       const data = await Auth.register({ login, password });
+
+      const isAdmin = defineIsAdmin(data.data.token);
+      if (isAdmin) {
+        setIsAdmin(true);
+      }
+
       if (data.meta) {
         toast.success(data.meta);
       }
-      navigate(routes.login);
+      setIsLoggedIn(true);
+
+      navigate(routes.main);
     } catch (e) {
       if (e instanceof AxiosError) {
         toast.error(e.response?.data.meta);

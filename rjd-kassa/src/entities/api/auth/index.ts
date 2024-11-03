@@ -1,11 +1,5 @@
 import { Api } from '@/entities/api';
-
-type AuthResponseType = {
-  data: {
-    token: string;
-  };
-  meta: string;
-};
+import { AuthResponseType } from '@/entities/api/auth/types.ts';
 
 export class Auth {
   public static async login(data: { login: string; password: string }) {

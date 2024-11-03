@@ -3,6 +3,7 @@ import { AppStore } from '@/entities/store/index.ts';
 
 type StateType = {
   isLoggedIn: boolean;
+  isAdmin: boolean;
   userData: UserData;
 };
 
@@ -16,6 +17,7 @@ export type UserData = {
 type ActionsType = {
   setIsLoggedIn: (isLoggedIn: boolean) => void;
   setUserData: (userData: UserData) => void;
+  setIsAdmin: (isAdmin: boolean) => void;
 };
 
 export type UserSliceType = StateType & ActionsType;
@@ -28,6 +30,8 @@ export const createUserSlice: StateCreator<
 > = (set) => ({
   isLoggedIn: false,
   setIsLoggedIn: (isLoggedIn) => set(() => ({ isLoggedIn })),
+  isAdmin: false,
+  setIsAdmin: (isAdmin) => set(() => ({ isAdmin })),
   userData: {},
   setUserData: (userData) => set(() => ({ userData })),
 });
