@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const EditUserPage = () => {
   const user = useAppStore((state) => state.userData);
+  const setUserData = useAppStore((state) => state.setUserData);
   const navigate = useNavigate();
 
   const [name, setName] = useState(user.name);
@@ -35,6 +36,9 @@ export const EditUserPage = () => {
         patronymic,
         passport_num: passportNum,
       });
+
+      const user = await User.me();
+      setUserData(user.data);
 
       if (data.meta) {
         toast.success(data.meta);
