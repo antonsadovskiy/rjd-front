@@ -1,0 +1,9 @@
+.page {
+    margin: 50px auto;
+    width: 500px;
+    /*margin-top: 10px;*/
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}

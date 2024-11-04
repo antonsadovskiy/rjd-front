@@ -19,13 +19,13 @@ export const AddNewVoyagePage = () => {
   const {
     rows: trainsRows,
     setSelectedRow: setSelectedTrainId,
-    selectedRow: selectedTrainId,
+    trainsTableSelectedRow,
     columns: trainsColumns,
   } = useTrainsTable();
 
   const {
     rows: routesRows,
-    selectedRow: selectedRouteId,
+    routesTableSelectedRow,
     setSelectedRow: setSelectedRouteId,
     columns: routesColumns,
   } = useRoutesTable();
@@ -35,13 +35,13 @@ export const AddNewVoyagePage = () => {
 
   const addNewVoyage = async () => {
     try {
-      if (!selectedRouteId || !selectedTrainId || !start_date) {
+      if (!routesTableSelectedRow || !trainsTableSelectedRow || !start_date) {
         return;
       }
 
       const data = await Voyage.adminAddVoyage({
-        route_id: selectedRouteId,
-        train_id: selectedTrainId,
+        route_id: routesTableSelectedRow,
+        train_id: trainsTableSelectedRow,
         start_date: start_date.toISOString(),
         ticket_cost,
       });
@@ -55,8 +55,13 @@ export const AddNewVoyagePage = () => {
   };
 
   const isButtonDisabled = useMemo(() => {
-    return !selectedRouteId || !selectedTrainId || !start_date || !ticket_cost;
-  }, [selectedRouteId, selectedTrainId, start_date, ticket_cost]);
+    return (
+      !routesTableSelectedRow ||
+      !trainsTableSelectedRow ||
+      !start_date ||
+      !ticket_cost
+    );
+  }, [routesTableSelectedRow, trainsTableSelectedRow, start_date, ticket_cost]);
 
   return (
     <div className={s.addVoyageBlock}>
@@ -66,12 +71,14 @@ export const AddNewVoyagePage = () => {
           minWidth={800}
           columns={trainsColumns}
           rows={trainsRows}
+          selectedRow={trainsTableSelectedRow}
           setSelectedRow={setSelectedTrainId}
         />
         <Typography variant={'h6'}>Маршруты</Typography>
         <Table
           minWidth={800}
           columns={routesColumns}
+          selectedRow={routesTableSelectedRow}
           rows={routesRows}
           setSelectedRow={setSelectedRouteId}
         />

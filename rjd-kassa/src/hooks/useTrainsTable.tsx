@@ -35,8 +35,14 @@ const columns: GridColDef[] = [
   },
 ];
 
-export const useTrainsTable = () => {
-  const [selectedRow, setSelectedRow] = useState<number | undefined>(undefined);
+export const useTrainsTable = (startSelectedRow?: number) => {
+  const [selectedRow, setSelectedRow] = useState<number | undefined>(
+    startSelectedRow,
+  );
+
+  const setSelectedRowHandler = (id: number) => {
+    setSelectedRow(id);
+  };
 
   const [rows, setRows] = useState<GridRowsProp>([]);
 
@@ -72,8 +78,8 @@ export const useTrainsTable = () => {
 
   return {
     columns,
-    selectedRow,
-    setSelectedRow,
+    trainsTableSelectedRow: selectedRow,
+    setSelectedRow: setSelectedRowHandler,
     rows,
     fetchData,
   };

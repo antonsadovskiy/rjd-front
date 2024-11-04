@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 import { AxiosError } from 'axios';
 import { defineIsAdmin } from '@/utils/token.service.ts';
 import { useAppStore } from '@/entities/store';
+import { User } from '@/entities/api/user';
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ export const RegisterPage = () => {
 
   const setIsLoggedIn = useAppStore((state) => state.setIsLoggedIn);
   const setIsAdmin = useAppStore((state) => state.setIsAdmin);
+  const setUserData = useAppStore((state) => state.setUserData);
 
   const register = async () => {
     try {
@@ -27,6 +29,9 @@ export const RegisterPage = () => {
       if (isAdmin) {
         setIsAdmin(true);
       }
+
+      const user = await User.me();
+      setUserData(user.data);
 
       if (data.meta) {
         toast.success(data.meta);

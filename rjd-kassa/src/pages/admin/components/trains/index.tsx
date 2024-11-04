@@ -15,7 +15,7 @@ export const Trains = () => {
 
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const { rows, setSelectedRow, selectedRow, columns, fetchData } =
+  const { rows, setSelectedRow, trainsTableSelectedRow, columns, fetchData } =
     useTrainsTable();
 
   const addNewTrainNavigate = () => navigate(routes.adminAddTrain);
@@ -23,8 +23,8 @@ export const Trains = () => {
   const deleteTrain = async () => {
     try {
       setIsDeleting(true);
-      if (selectedRow) {
-        const data = await Train.adminDeleteTrain(selectedRow);
+      if (trainsTableSelectedRow) {
+        const data = await Train.adminDeleteTrain(trainsTableSelectedRow);
         toast.success(data.meta);
 
         await fetchData();
@@ -39,7 +39,9 @@ export const Trains = () => {
   };
 
   const editTrain = () => {
-    const selectedTrain = rows.find((item) => item.id === selectedRow);
+    const selectedTrain = rows.find(
+      (item) => item.id === trainsTableSelectedRow,
+    );
     if (selectedTrain) {
       navigate(routes.adminEditTrain, { state: selectedTrain });
     }
@@ -48,7 +50,12 @@ export const Trains = () => {
   return (
     <div>
       <Typography variant={'h6'}>Действия с поездами</Typography>
-      <Table columns={columns} rows={rows} setSelectedRow={setSelectedRow} />
+      <Table
+        columns={columns}
+        rows={rows}
+        selectedRow={trainsTableSelectedRow}
+        setSelectedRow={setSelectedRow}
+      />
       <div className={s.buttons}>
         <Button
           onClick={addNewTrainNavigate}
@@ -59,7 +66,7 @@ export const Trains = () => {
         </Button>
         <LoadingButton
           loading={isDeleting}
-          disabled={!selectedRow}
+          disabled={!trainsTableSelectedRow}
           onClick={deleteTrain}
           color={'error'}
           variant={'contained'}
@@ -67,7 +74,7 @@ export const Trains = () => {
           Удалить поезд
         </LoadingButton>
         <Button
-          disabled={!selectedRow}
+          disabled={!trainsTableSelectedRow}
           onClick={editTrain}
           color={'warning'}
           variant={'contained'}

@@ -31,7 +31,12 @@ export const MainPage = () => {
 
   return (
     <div className={s.page}>
-      <Table rows={rows} columns={columns} setSelectedRow={setSelectedRow} />
+      <Table
+        rows={rows}
+        columns={columns}
+        selectedRow={selectedRow}
+        setSelectedRow={setSelectedRow}
+      />
       <Button disabled={!selectedRow} onClick={buyTicket} variant={'contained'}>
         Купить билет
       </Button>

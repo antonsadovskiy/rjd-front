@@ -39,7 +39,6 @@ export const Voyages = () => {
 
   const editVoyage = () => {
     const selectedRoute = rows.find((item) => item.id === selectedRow);
-    console.log(selectedRoute);
     if (selectedRoute) {
       navigate(routes.adminEditVoyage, { state: { ...selectedRoute } });
     }
@@ -48,7 +47,12 @@ export const Voyages = () => {
   return (
     <div>
       <Typography variant={'h6'}>Действия с путешествиями</Typography>
-      <Table columns={columns} rows={rows} setSelectedRow={setSelectedRow} />
+      <Table
+        columns={columns}
+        selectedRow={selectedRow}
+        rows={rows}
+        setSelectedRow={setSelectedRow}
+      />
       <div className={s.buttons}>
         <Button
           onClick={addNewVoyageNavigate}

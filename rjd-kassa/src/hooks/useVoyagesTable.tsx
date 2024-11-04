@@ -64,8 +64,10 @@ const columns: GridColDef[] = [
   },
 ];
 
-export const useVoyagesTable = () => {
-  const [selectedRow, setSelectedRow] = useState<number | undefined>(undefined);
+export const useVoyagesTable = (startSelectedRow?: number) => {
+  const [selectedRow, setSelectedRow] = useState<number | undefined>(
+    startSelectedRow,
+  );
 
   const [rows, setRows] = useState<GridRowsProp>([]);
 

@@ -8,6 +8,7 @@ import {
 type TablePropsType = {
   rows: GridRowsProp;
   columns: GridColDef[];
+  selectedRow?: number;
   setSelectedRow: (id: number) => void;
   minWidth?: number;
   sortModel?: GridSortModel;
@@ -18,6 +19,7 @@ export const Table = ({
   rows,
   columns,
   setSelectedRow,
+  selectedRow,
   minWidth,
   sortModel,
   setSortModel,
@@ -33,6 +35,7 @@ export const Table = ({
       initialState={{
         pagination: { paginationModel: { pageSize: 10 } },
       }}
+      rowSelectionModel={selectedRow ? [selectedRow] : []}
       pageSizeOptions={[10, 25, 50, 100]}
       onSortModelChange={setSortModel}
       disableMultipleRowSelection={true}

@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 import { AxiosError } from 'axios';
 import { useAppStore } from '@/entities/store';
 import { defineIsAdmin } from '@/utils/token.service.ts';
+import { User } from '@/entities/api/user';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ export const LoginPage = () => {
 
   const setIsLoggedIn = useAppStore((state) => state.setIsLoggedIn);
   const setIsAdmin = useAppStore((state) => state.setIsAdmin);
+  const setUserData = useAppStore((state) => state.setUserData);
 
   const loginHandler = async () => {
     try {
@@ -26,6 +28,9 @@ export const LoginPage = () => {
       if (isAdmin) {
         setIsAdmin(true);
       }
+
+      const user = await User.me();
+      setUserData(user.data);
 
       if (data.meta) {
         toast.success(data.meta);

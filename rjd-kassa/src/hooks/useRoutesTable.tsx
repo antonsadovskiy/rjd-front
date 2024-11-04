@@ -28,8 +28,10 @@ const columns: GridColDef[] = [
   },
 ];
 
-export const useRoutesTable = () => {
-  const [selectedRow, setSelectedRow] = useState<number | undefined>(undefined);
+export const useRoutesTable = (startSelectedRow?: number) => {
+  const [selectedRow, setSelectedRow] = useState<number | undefined>(
+    startSelectedRow,
+  );
 
   const [rows, setRows] = useState<GridRowsProp>([]);
 
@@ -65,7 +67,7 @@ export const useRoutesTable = () => {
   return {
     rows,
     columns,
-    selectedRow,
+    routesTableSelectedRow: selectedRow,
     setSelectedRow,
     fetchData,
   };

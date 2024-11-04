@@ -103,7 +103,12 @@ export const MyTicketsPage = () => {
 
   return (
     <div className={s.page}>
-      <Table rows={rows} columns={columns} setSelectedRow={setSelectedRow} />
+      <Table
+        rows={rows}
+        selectedRow={selectedRow}
+        columns={columns}
+        setSelectedRow={setSelectedRow}
+      />
       <LoadingButton
         loading={loading}
         disabled={!selectedRow}

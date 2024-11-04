@@ -28,6 +28,7 @@ export type VoyageType = {
     model: string;
     train_type: string;
   };
+  route_id: number;
   from: string;
   to: string;
   tickets_left: number;

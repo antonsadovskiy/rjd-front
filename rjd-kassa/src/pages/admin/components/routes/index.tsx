@@ -14,7 +14,7 @@ export const Routes = () => {
   const navigate = useNavigate();
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const { selectedRow, setSelectedRow, rows, fetchData, columns } =
+  const { routesTableSelectedRow, setSelectedRow, rows, fetchData, columns } =
     useRoutesTable();
 
   const addNewRouteNavigate = () => navigate(routes.adminAddRoute);
@@ -23,8 +23,8 @@ export const Routes = () => {
     try {
       setIsDeleting(true);
 
-      if (selectedRow) {
-        const data = await Route.adminDeleteRoute(selectedRow);
+      if (routesTableSelectedRow) {
+        const data = await Route.adminDeleteRoute(routesTableSelectedRow);
         toast.success(data.meta);
 
         await fetchData();
@@ -39,7 +39,9 @@ export const Routes = () => {
   };
 
   const editRoute = () => {
-    const selectedRoute = rows.find((item) => item.id === selectedRow);
+    const selectedRoute = rows.find(
+      (item) => item.id === routesTableSelectedRow,
+    );
     if (selectedRoute) {
       navigate(routes.adminEditRoute, { state: selectedRoute });
     }
@@ -48,7 +50,12 @@ export const Routes = () => {
   return (
     <div>
       <Typography variant={'h6'}>Действия с маршрутами</Typography>
-      <Table columns={columns} rows={rows} setSelectedRow={setSelectedRow} />
+      <Table
+        columns={columns}
+        selectedRow={routesTableSelectedRow}
+        rows={rows}
+        setSelectedRow={setSelectedRow}
+      />
       <div className={s.buttons}>
         <Button
           onClick={addNewRouteNavigate}
@@ -59,7 +66,7 @@ export const Routes = () => {
         </Button>
         <LoadingButton
           loading={isDeleting}
-          disabled={!selectedRow}
+          disabled={!routesTableSelectedRow}
           onClick={deleteRoute}
           color={'error'}
           variant={'contained'}
@@ -67,7 +74,7 @@ export const Routes = () => {
           Удалить маршрут
         </LoadingButton>
         <Button
-          disabled={!selectedRow}
+          disabled={!routesTableSelectedRow}
           onClick={editRoute}
           color={'warning'}
           variant={'contained'}

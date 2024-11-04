@@ -24,16 +24,16 @@ export const EditVoyagePage = () => {
   const {
     rows: trainsRows,
     setSelectedRow: setSelectedTrainId,
-    selectedRow: selectedTrainId,
+    trainsTableSelectedRow,
     columns: trainsColumns,
-  } = useTrainsTable();
+  } = useTrainsTable(state.train.id);
 
   const {
     rows: routesRows,
-    selectedRow: selectedRouteId,
+    routesTableSelectedRow,
     setSelectedRow: setSelectedRouteId,
     columns: routesColumns,
-  } = useRoutesTable();
+  } = useRoutesTable(state.route_id);
 
   const [start_date, setStartDate] = useState<Dayjs | null>(
     dayjs(state.start_date),
@@ -42,13 +42,13 @@ export const EditVoyagePage = () => {
 
   const editVoyage = async () => {
     try {
-      if (!selectedRouteId || !selectedTrainId || !start_date) {
+      if (!routesTableSelectedRow || !trainsTableSelectedRow || !start_date) {
         return;
       }
 
       const data = await Voyage.adminEditVoyage({
-        route_id: selectedRouteId,
-        train_id: selectedTrainId,
+        route_id: routesTableSelectedRow,
+        train_id: trainsTableSelectedRow,
         start_date: start_date.toISOString(),
         ticket_cost,
         id: 1,
@@ -63,14 +63,20 @@ export const EditVoyagePage = () => {
   };
 
   const isButtonDisabled = useMemo(() => {
-    return !selectedRouteId || !selectedTrainId || !start_date || !ticket_cost;
-  }, [selectedRouteId, selectedTrainId, start_date, ticket_cost]);
+    return (
+      !routesTableSelectedRow ||
+      !trainsTableSelectedRow ||
+      !start_date ||
+      !ticket_cost
+    );
+  }, [routesTableSelectedRow, trainsTableSelectedRow, start_date, ticket_cost]);
 
   return (
     <div className={s.addVoyageBlock}>
       <div className={s.card}>
         <Typography variant={'h6'}>Поезда</Typography>
         <Table
+          selectedRow={trainsTableSelectedRow}
           minWidth={800}
           columns={trainsColumns}
           rows={trainsRows}
@@ -78,6 +84,7 @@ export const EditVoyagePage = () => {
         />
         <Typography variant={'h6'}>Маршруты</Typography>
         <Table
+          selectedRow={routesTableSelectedRow}
           minWidth={800}
           columns={routesColumns}
           rows={routesRows}

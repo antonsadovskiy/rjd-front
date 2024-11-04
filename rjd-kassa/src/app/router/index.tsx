@@ -18,6 +18,7 @@ import { EditRoutePage } from '@/pages/admin/edit-route-page';
 import { AddNewVoyagePage } from '@/pages/admin/add-new-voyage-page';
 import { EditVoyagePage } from '@/pages/admin/edit-voyage-page';
 import { MyTicketsPage } from '@/pages/my-tickets-page';
+import { EditUserPage } from '@/pages/edit-user-page';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,6 +38,7 @@ export const router = createBrowserRouter(
         <Route path={routes.adminEditVoyage} element={<EditVoyagePage />} />
 
         <Route path={routes.main} element={<MainPage />} />
+        <Route path={routes.editUser} element={<EditUserPage />} />
         <Route path={routes.myTickets} element={<MyTicketsPage />} />
       </Route>
     </Route>,

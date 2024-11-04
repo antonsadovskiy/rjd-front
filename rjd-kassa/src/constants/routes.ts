@@ -5,6 +5,7 @@ export const routes = {
   register: '/register',
   admin: '/admin',
   myTickets: '/my-tickets',
+  editUser: '/edit-user',
   adminAddTrain: '/admin/add-train',
   adminEditTrain: '/admin/edit-train',
   adminAddRoute: '/admin/add-route',
